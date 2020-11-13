@@ -2,22 +2,19 @@ const express = require("express");
 const Router = express.Router();
 const mysqlConnection = require("../connection");
 
-un_id = []
-maj_id = []
-
 var sql = `INSERT INTO 
 sam_majento_db.product_maj 
 SELECT * 
-FROM sam_unicent_db.product un 
+FROM sam_unicent_db.product_un un 
 WHERE un.id NOT IN (
     SELECT maj.id FROM sam_majento_db.product_maj maj
     );
 INSERT INTO 
-sam_unicent_db.product 
+sam_unicent_db.product_un 
 SELECT * 
 FROM sam_majento_db.product_maj maj 
 WHERE maj.id NOT IN (
-    SELECT un.id FROM sam_unicent_db.product un
+    SELECT un.id FROM sam_unicent_db.product_un un
     )`;
 
 Router.get("/",(req,res)=>{
