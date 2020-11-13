@@ -5,15 +5,28 @@ const mysqlConnection = require("../connection");
 un_id = []
 maj_id = []
 
-var sql = "SELECT id from sam_unicent_db.product un;SELECT id from sam_majento_db.product_maj maj";
+var sql = `INSERT INTO 
+sam_majento_db.product_maj 
+SELECT * 
+FROM sam_unicent_db.product un 
+WHERE un.id NOT IN (
+    SELECT maj.id FROM sam_majento_db.product_maj maj
+    );
+INSERT INTO 
+sam_unicent_db.product 
+SELECT * 
+FROM sam_majento_db.product_maj maj 
+WHERE maj.id NOT IN (
+    SELECT un.id FROM sam_unicent_db.product un
+    )`;
 
 Router.get("/",(req,res)=>{
     mysqlConnection.query(sql,
     (err, rows, fields)=>{
         if(!err) {
-            res.send(rows);
-            //console.log(rows)
-            //un_id = Object.keys(row)
+            if(Object.keys(rows).length > 0) {
+                res.send(rows);
+            }
         }
         else {
             console.log(err)
