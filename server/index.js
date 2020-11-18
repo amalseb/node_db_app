@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 //app.post("/majento_insert", MajentoRoutes);
-app.post("/unicento_insert", UnicentoRoutes);
+app.use("/unicento_insert", UnicentoRoutes);
 //app.use("/product", ProductRoutes);
 
 app.listen(3030, () =>{
