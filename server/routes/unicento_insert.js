@@ -3,14 +3,7 @@ const mysqlConnection = require("../connection");
 const Router = express.Router();
 
 var uni_insert = `INSERT INTO sam_unicent_db.product_un (id,product_name,stock) 
-VALUES (?,?,?);
-INSERT INTO 
-sam_majento_db.product_maj 
-SELECT * 
-FROM sam_unicent_db.product_un un 
-WHERE un.id NOT IN (
-    SELECT maj.id FROM sam_majento_db.product_maj maj
-    );`;
+VALUES (?,?,?);`;
 
 Router.post("/",(req,res)=>{
 
